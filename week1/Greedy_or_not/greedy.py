@@ -29,7 +29,7 @@ for i in range (n):
         else:
             sc2=sc2+l[-1]
             l.pop()
-    print("Standing of game",i+1,"th move")
+    print("Standing of game at move no.",i+1)
     print("Score of player1",sc1)
     print("score of player2",sc2)
     print("list remaining",l)
