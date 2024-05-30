@@ -20,7 +20,7 @@ def isnim(l):
 
 def print_general():
     print("GENERAL INSTRUCTION")
-    print("Enter your moves as (a b) seperated by space where a is the heap no. starting from 0 and b is no. of elements you want to remove")
+    print("Enter your moves as (a,b) seperated by comma where a is the heap no. starting from 0 and b is no. of elements you want to remove")
 
 
 def response_computer(l,c):
@@ -42,7 +42,7 @@ def response_computer(l,c):
             for ele in jnew:
                 if ele==1:
                     q=q+1
-            if q==len(jnew):
+            if len(jnew)>0 and q==len(jnew):
                 if q%2==1:
                     row=i
                     no=j
@@ -127,7 +127,7 @@ def game_with_computer():
 def printnim(l):
     print("Current heap status")
     for i in range (len(l)):
-        print(i,end="  ") 
+        print(i,end=" ") 
         for j in range (l[i]):
             print("| ",end="")
         print(end="\n")
@@ -135,7 +135,7 @@ def printnim(l):
 def response(l,c):
     print("Enter your move Player",c+1,end=": ")
     res=input()
-    res=res.split()
+    res=res.split(',')
     res[0]=int(res[0])
     res[1]=int(res[1])
     if (res[0]>=len(l)):
@@ -196,10 +196,6 @@ def maingame():
     else:
         print("Enter valid input either '2p' or 'c'")
         maingame()
-
-        
-
-
 
 maingame()
 
