@@ -92,6 +92,10 @@ def inputMove(l,moving,other,dire):
 def maingame():
     print("Enter the size of the board(<=10)")
     size=int(input())
+    if size>10:
+        print("size must be <=10")
+        maingame()
+        return
     print("Do you want to play as White(you get the priveledge to move first)\nReply with y/n")
     c=input()
     if c=='y':
