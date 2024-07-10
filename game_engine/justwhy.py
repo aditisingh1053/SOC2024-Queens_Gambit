@@ -7,6 +7,8 @@ import copy
 class My_Engine():
     def __init__(self, fen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'):
         self.board = chess.Board(fen)
+        self.killer_moves = {}
+        self.history_heuristic = {}
 
     def get_child(self, move):
         new_engine = My_Engine(self.board.fen())
@@ -19,7 +21,7 @@ class My_Engine():
     def make_move(self, move):
         self.board.push(move)
 
-    def order_moves_2(self) -> list:
+    def order_moves(self) -> list:
         """Returns a list of legal moves ordered according to the number of legal moves in the next state, then by check. If a move leads to a checkmate, it is returned immediately."""
         moves_dict = dict()
         board = copy.deepcopy(self.board)
@@ -37,7 +39,10 @@ class My_Engine():
     def evaluate_board(self, max_player: bool) -> int:
 
         if self.board.is_checkmate():
-            return -math.inf if self.board.turn else math.inf
+            if max_player:
+                return -math.inf
+            else:
+                return math.inf
         if self.board.is_stalemate() or self.board.is_insufficient_material():
             return 0
 
@@ -142,8 +147,10 @@ class My_Engine():
 
         return eval
 
+
     def alpha_beta_pruning(self, alpha: float, beta: float, depth: int, max_player: bool) -> tuple:
         if depth == 0 or self.board.is_game_over():
+            # print (self.evaluate_board(max_player))
             return self.evaluate_board(max_player), None
         if max_player:
             max_eval = -math.inf
@@ -172,13 +179,13 @@ class My_Engine():
                     break
             return min_eval, best_move
    
-    def puzzle_solving(self, depth) :
+    def puzzle_solving(self, depth: int) -> None:
+        """Makes the best move for the current player using alpha-beta pruning until the depth of `depth`."""
+        global storage
         _val, move = self.alpha_beta_pruning(-math.inf, math.inf, depth, True)
         for i in range(depth):
             self.make_move(move)
             if self.board.is_game_over():
                 return
             _val, move = self.alpha_beta_pruning(-math.inf, math.inf, depth-i, True)
-    def playonce(self,depth,maxplayer):
-        val,move= self.alpha_beta_pruning(-math.inf, math.inf, depth, maxplayer)
-        self.make_move(move)
+     
