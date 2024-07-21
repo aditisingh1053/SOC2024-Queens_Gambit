@@ -34,7 +34,7 @@ public:
     }
 
     vector<Move> getOrderedMoves() {
-         auto moves = getLegalMoves();
+        auto moves = getLegalMoves();
         vector<pair<float, Move>> orderedMoves;
         for (const auto& move : moves) {
             board.makeMove(move);
@@ -42,9 +42,17 @@ public:
                 board.unmakeMove(move);
                 return {move};
             } else if (board.inCheck()) {
-                orderedMoves.push_back({50, move});
+                if (board.sideToMove() == Color("w")) {
+                    orderedMoves.push_back({50,move});
+                } else {
+                    orderedMoves.push_back({-50,move});
+                }
             } else {
-                orderedMoves.push_back({evaluate(), move});
+                 if (board.sideToMove() == Color("w")) {
+                    orderedMoves.push_back({evaluate(),move});
+                } else {
+                    orderedMoves.push_back({-evaluate(),move});
+                }
             }
             float score = evaluate();
             board.unmakeMove(move);
@@ -58,7 +66,6 @@ public:
         }
         return ordered;
     }
-
     void makeMove(const Move& move) {
         board.makeMove(move);
     }
