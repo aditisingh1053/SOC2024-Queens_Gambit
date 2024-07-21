@@ -42,9 +42,17 @@ public:
                 board.unmakeMove(move);
                 return {move};
             } else if (board.inCheck()) {
-                orderedMoves.push_back({50, move});
+                if (board.sideToMove() == Color("w")) {
+                    orderedMoves.push_back({50,move});
+                } else {
+                    orderedMoves.push_back({-50,move});
+                }
             } else {
-                orderedMoves.push_back({evaluate(), move});
+                 if (board.sideToMove() == Color("w")) {
+                    orderedMoves.push_back({evaluate(),move});
+                } else {
+                    orderedMoves.push_back({-evaluate(),move});
+                }
             }
             float score = evaluate();
             board.unmakeMove(move);
@@ -320,8 +328,8 @@ int main() {
         //  cout << engine.board << '\n';
         if (move_count % 2 == 0) {
 ;
-            engine.getBestMoveforwhite(5);
-            Move move = uci::uciToMove(engine.board, engine.getBestMoveforwhite(5));
+            auto mymove=engine.getBestMoveforwhite(5);
+            Move move = uci::uciToMove(engine.board, mymove);
             cout << "White: " << uci::moveToUci(move) << endl;
            
             engine.board.makeMove(move);
