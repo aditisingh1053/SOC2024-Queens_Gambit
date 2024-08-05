@@ -173,6 +173,7 @@ class History:
                     if self.boards[i][j] == '0':
                         valid_actions.append(i * 9 + j)
         return valid_actions
+    
     def get_valid_action2(self):
         valid_actions = []
         for i in range(self.num_boards):

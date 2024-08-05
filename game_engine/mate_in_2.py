@@ -11,8 +11,8 @@ import chess.svg
 # from new_engine import Engine
 # from try_2 import My_Engine
 # from my_final_engine import My_Engine
-from something import My_Engine
-# from justwhy import My_Engine
+# from something import My_Engine
+from justwhy import My_Engine
 
 # data = np.zeros(351)
 start = time.time()
